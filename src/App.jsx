@@ -6,8 +6,17 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <div>
-      <img src={pokedex} alt="pokedex-img" />
+    <div className='content'>
+      <main>
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/6.gif" alt="pokemon-img" className='pokemon-img'/>
+
+        <h1 className='pokemon_data'>
+          <span className='pokemon-number'>6</span> - 
+          <span className='pokemon_name'> charizard</span>
+        </h1>
+
+        <img src={pokedex} alt="pokedex-img" className='pokedex-img' />
+      </main>
     </div>
     
   )
