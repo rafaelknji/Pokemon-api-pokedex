@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import pokedex from './assets/pokedex.png'
 import './App.css'
+import SearchBar from './components/SearchBar'
+import NavigationButtons from './components/NavigationButtons'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -15,10 +17,13 @@ function App() {
           <span className='pokemon_name'> charizard</span>
         </h1>
 
+        <SearchBar/>
+
+        <NavigationButtons/>
+
         <img src={pokedex} alt="pokedex-img" className='pokedex-img' />
       </main>
-    </div>
-    
+    </div>   
   )
 }
 
