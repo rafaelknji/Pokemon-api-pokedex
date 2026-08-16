@@ -1,9 +1,28 @@
-function NavigationButtons(){
+function NavigationButtons({pokemonData, buscarPokemon}){
+
+    const idAtual = pokemonData?.id;
 
     return(
         <div className="buttons">
-            <button className="previous">❮ Prev</button>
-            <button className="next">Next ❯</button>
+            <button
+             onClick={() => {
+                if(idAtual > 1) {
+                    buscarPokemon(idAtual-1)
+                }
+            }} 
+                className="previous">
+                    ❮ Prev
+            </button>
+
+
+            <button onClick={() => {
+                if(idAtual < 1026) {
+                     buscarPokemon(idAtual+1)
+                }
+            }} 
+                className="next">
+                Next ❯
+            </button>
         </div>
     )
 }

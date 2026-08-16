@@ -1,25 +1,72 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import pokedex from './assets/pokedex.png'
 import './App.css'
 import SearchBar from './components/SearchBar'
 import NavigationButtons from './components/NavigationButtons'
+import fetchPokemon from './services/api'
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const [pokemon, setPokemon] = useState("");
+  const [pokemonData, setPokemonData] = useState(null);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    buscarPokemon(1);}, []);
+
+
+  const buscarPokemon = async(pokemon) => {   
+    setLoading(true)
+
+    try {
+      const data = await fetchPokemon(pokemon);
+      setPokemonData(data);
+      setError("");
+    } 
+    catch (error) {
+      setPokemonData(null);
+      setError(error.message);
+    } 
+    finally {
+      setLoading(false)
+    }
+  };
+
 
   return (
     <div className='content'>
       <main>
-        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/6.gif" alt="pokemon-img" className='pokemon-img'/>
+       
+      {pokemonData && ( 
+        <img src={pokemonData.sprites.versions["generation-v"]["black-white"].animated.front_default || pokemonData.sprites.front_default} alt={pokemonData.name} className='pokemon-img'/>
+      )}
 
         <h1 className='pokemon_data'>
-          <span className='pokemon-number'>6</span> - 
-          <span className='pokemon_name'> charizard</span>
+          {loading ? (
+            <span className='loading'>Loading...</span>
+          ) : pokemonData ? ( 
+          <>
+            <span className='pokemon-number'>{pokemonData.id}</span>
+            {" - "}
+            <span className='pokemon_name'> {pokemonData.name}</span>
+          </>  
+          ) : error ? (
+            <span className='not_found'> Not found :(</span> 
+          ) : null }
         </h1>
 
-        <SearchBar/>
+        <SearchBar
+          pokemon={pokemon}
+          setPokemon={setPokemon}
+          buscarPokemon={buscarPokemon}
+        />
 
-        <NavigationButtons/>
+        <NavigationButtons
+        pokemonData={pokemonData}
+        buscarPokemon={buscarPokemon}
+        />
+        
 
         <img src={pokedex} alt="pokedex-img" className='pokedex-img' />
       </main>

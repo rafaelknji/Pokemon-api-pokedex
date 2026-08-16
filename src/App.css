@@ -83,5 +83,9 @@ button:active {
     font-size: 0.9rem;
 }
 
+.loading, .not_found {
+     color: #3a444d;
+}
+
 
 
